@@ -32,30 +32,21 @@ export default class View_note extends React.Component{
     invalid_note: false
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     let { match: { params: { note } }, dispatch } = this.props
-
-    axios.post('/api/liked-or-not', { note }).then(l => this.setState({ liked: l.data }) )
-
+    let { data } = await axios.post('/api/liked-or-not', { note })
+    this.setState({ liked: data })
     dispatch(note_int_action.note_details(note))
     dispatch(note_int_action.likes(note))
   }
 
-  componentWillReceiveProps = ({ note_int: { note_details: { note_id } } }) => {
+  componentWillReceiveProps = ({ note_int: { note_details: { note_id } } }) =>
     !note_id ? this.setState({ invalid_note: true }) : null
-  }
 
   toggle_ = (e, what) => {
     e ? e.preventDefault() : null
-    switch (what) {
-      case "deleting":
-        this.setState({ deleting: !this.state.deleting })
-        break
-      case "editing":
-        this.setState({ editing: !this.state.editing })
-        $('.v_n_edit').blur()
-        break
-    }
+    this.setState({ [what]: !this.state[what] })
+    what == 'editing' ? $('.v_n_edit').blur() : null
   }
 
   back = e => fn.back(e, this.props.history)
@@ -104,7 +95,7 @@ export default class View_note extends React.Component{
 
         { invalid_note ? <Redirect to="/error/note_notfound" /> : null }
 
-        <Title value="View note • Notes App" />
+        <Title value="View note" />
 
         <FadeIn duration="300ms" >
           <div className="v_n_header modal_header">
@@ -146,12 +137,11 @@ export default class View_note extends React.Component{
                     onClick={this.like}
                   ><i class="material-icons">favorite_border</i></span>
               }
+              <Link
+                to={`${match.url}/likes`}
+                className={`v_n_likes sec_btn ${editing ? 'sec_btn_disabled' : ''}`}
+              >{`${likes.length} likes`}</Link>
             </div>
-
-            <Link
-              to={`${match.url}/likes`}
-              className={`v_n_likes sec_btn ${editing ? 'sec_btn_disabled' : ''}`}
-            >{`${likes.length} likes`}</Link>
 
             {
               fn.Me(user) ?
@@ -189,12 +179,12 @@ export default class View_note extends React.Component{
           </div>
         </FadeIn>
 
-        { (deleting) ? <Overlay/> : null }
+        { (deleting) ? <Overlay type="white" /> : null }
         {
           deleting ?
             <Prompt
               title={"Delete note"}
-              content={"This post will be deleted. There's no undo so you won't be able to find it."}
+              content={"This note will be deleted. There's no undo so you won't be able to find it."}
               actionText= "Delete"
               action={this.delete}
               state_updater="deleting"
@@ -203,7 +193,7 @@ export default class View_note extends React.Component{
           : null
         }
 
-        <Route path={`${match.url}/likes`} component={() => <Overlay visible={false} /> } />
+        <Route path={`${match.url}/likes`} component={() => <Overlay type="white" /> } />
         <Route path={`${match.url}/likes`} component={Likes} />
 
       </div>

@@ -16,7 +16,7 @@ export default class Deactivate extends React.Component{
     e ? e.preventDefault() : null
     switch (what) {
       case "deactivate":
-        this.setState({ deactivate: !this.state.deactivate })
+        this.setState(state => ({ deactivate: !state.deactivate }))
         break
     }
   }
@@ -31,7 +31,7 @@ export default class Deactivate extends React.Component{
 
     return (
       <div>
-        <Title value="Deactivate your account • Notes App" />
+        <Title value="Deactivate your account" />
         <FadeIn duration="300ms" >
           <div class="registered deactivate" >
             <span className="deactivate_title" >Deactivate your account?</span>

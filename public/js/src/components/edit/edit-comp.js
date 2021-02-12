@@ -26,29 +26,17 @@ export default class Edit extends React.Component{
   }
 
   componentDidMount = () => {
-    this.props.dispatch(user_action.user_details($('.data').data('username')))
+    let
+      { dispatch } = this.props,
+      username = $('.data').data('username')
+    dispatch(user_action.user_details(username))
   }
 
-  componentWillReceiveProps = ({ user: { user_details: { username, email, bio } }}) => {
+  componentWillReceiveProps = ({ user: { user_details: { username, email, bio } }}) =>
     this.setState({ username, email, bio })
-  }
 
-  update_ = (e, of) => {
-    let v = e.target.value
-    switch (of) {
-      case "username":
-        this.setState({ username: v })
-        break
-      case "email":
-        this.setState({ email: v })
-        break
-      case "bio":
-        this.setState({ bio: v })
-        break
-      case "file":
-        this.setState({ file: v })
-        break
-    }
+  update_ = (e, what) => {
+    this.setState({ [what]: e.target.value })
   }
 
   edit_profile = e => {
@@ -77,7 +65,7 @@ export default class Edit extends React.Component{
       return(
         <div class='edit'>
 
-          <Title value="Edit profile • Notes App" />
+          <Title value="Edit profile" />
 
           <FadeIn duration="300ms" className="edit_animation" >
             <div class="edit_info">

@@ -23,11 +23,10 @@ app.post('/get-note-details', (req, res) => {
 // FOR GETTING ALL THE DETAILS OF A NOTE BY A NOTE_ID
 app.post('/delete-note', (req, res) => {
   P.coroutine(function* () {
-    let
-      { note } = req.body,
-      likes = yield db.query('DELETE FROM likes WHERE note_id=?', [note]),
-      dlt_note = yield db.query('DELETE FROM notes WHERE note_id=?', [note])
-    res.json({ mssg: "Note deleted!" })
+    let { note } = req.body
+    yield db.query('DELETE FROM likes WHERE note_id=?', [note]),
+    yield db.query('DELETE FROM notes WHERE note_id=?', [note])
+    res.json({ mssg: "Note Deleted!!" })
   })()
 })
 
@@ -35,7 +34,7 @@ app.post('/delete-note', (req, res) => {
 app.post('/edit-note', (req, res) => {
   let { title, content, note_id } = req.body
   db.query('UPDATE notes SET title=?, content=? WHERE note_id=? AND user=?', [title, content, note_id, req.session.id])
-    .then(update => (update.affectedRows == 1) ? res.json({ mssg: 'Note edited!' }) : null)
+    .then(update => res.json({ mssg: 'Note edited!' }) )
     .catch(err => res.json(err))
 })
 
@@ -44,24 +43,24 @@ app.post('/create-note', (req, res) => {
   let
     { session, body } = req,
     insert = {
-        user: session.id,
-        username: session.username,
-        title: body.title,
-        content: body.content,
-        note_time: new Date().getTime()
+      user: session.id,
+      username: session.username,
+      title: body.title,
+      content: body.content,
+      note_time: new Date().getTime()
     }
   db.query('INSERT INTO notes SET ?', insert)
     .then(s => {
-      let n = Object.assign({}, insert, { note_id: s.insertId, mssg: "Note created!" })
-      s.affectedRows == 1 ? res.json(n) : null
+      let n = Object.assign({}, insert, { note_id: s.insertId })
+      res.json(n)
     })
     .catch(e => res.json(e))
 })
 
 app.post('/no-of-notes', (req, res) => {
   P.coroutine(function* () {
-    let notes = yield db.query('SELECT COUNT(note_id) AS count FROM notes WHERE user=?', [req.body.user])
-    res.json(notes[0].count)
+    let [{ count }] = yield db.query('SELECT COUNT(note_id) AS count FROM notes WHERE user=?', [req.body.user])
+    res.json(count)
   })()
 })
 

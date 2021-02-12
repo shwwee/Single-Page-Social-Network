@@ -17,7 +17,8 @@ import * as note_action from '../../actions/notes-action'
 
 export default class Home extends React.Component{
 
-  componentDidMount = () => this.props.dispatch(note_action.getFeeds())
+  componentDidMount = () =>
+    this.props.dispatch(note_action.getFeeds())
 
   render(){
     let
@@ -27,7 +28,7 @@ export default class Home extends React.Component{
 
     return(
       <div class='home' >
-        <Title value="Notes App" />
+        <Title value="Home" />
         <FadeIn duration="300ms" >
           <div className="home_info">
             <span>{no_of_feeds}</span>

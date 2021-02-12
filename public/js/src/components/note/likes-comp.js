@@ -25,11 +25,13 @@ export default class Likes extends React.Component{
   render(){
     let
       { note_int: { likes, note_details: { note_id } } } = this.props,
-      map_l = likes.map(l => <Like_items key={l.like_id} {...l} /> )
+      map_l = likes.map(l =>
+        <Like_items key={l.like_id} {...l} />
+      )
 
     return(
         <div class='likes modal modal_big' >
-          <Title value="Likes • Notes App" />
+          <Title value="Likes" />
           <FadeIn duration="300ms" >
             <div className="likes_header modal_header">
               <span className="title" >Likes</span>

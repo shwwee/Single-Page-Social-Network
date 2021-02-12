@@ -14,11 +14,12 @@ export default class Like_items extends React.Component{
 
   state = { is_following: false }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     let { like_by, like_by_username: username } = this.props
-    !fn.Me(like_by) ?
-      axios.post('/api/is-following', { username }).then(is => this.setState({ is_following: is.data }) )
-    : null
+    if(!fn.Me(like_by)) {
+      let { data } = await axios.post('/api/is-following', { username })
+      this.setState({ is_following: data })
+    }
   }
 
   follow = e => {
@@ -26,12 +27,9 @@ export default class Like_items extends React.Component{
     let
       { like_by, like_by_username, dispatch } = this.props,
       getid = $('.profile_data').data('getid'),
-      user = getid ? getid : null,
       obj = {
         user: like_by,
-        username: like_by_username,    // only when update_followings=true
-        dispatch,
-        update_followings: fn.Me(user),
+        username: like_by_username,
         done: () => this.setState({ is_following: true })
       }
     fn.follow(obj)
@@ -42,11 +40,8 @@ export default class Like_items extends React.Component{
     let
       { like_by, dispatch } = this.props,
       getid = $('.profile_data').data('getid'),
-      user = getid ? getid : null,
       obj = {
         user: like_by,
-        dispatch,
-        update_followings: fn.Me(user),
         done: () => this.setState({ is_following: false })
       }
     fn.unfollow(obj)

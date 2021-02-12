@@ -12,33 +12,45 @@ import * as fn from '../../functions/functions'
 	}
 })
 
-export default class Banner extends React.Component{
+export default class Banner extends React.Component {
 
 	state = { is_following: false }
 
-	componentWillReceiveProps = ({ follow: { is_following } }) => this.setState({ is_following })
+	componentWillReceiveProps = ({ follow: { is_following } }) =>
+    this.setState({ is_following })
 
 	follow = e => {
 		e.preventDefault()
-		let
-      { dispatch, user: { user_details: { id, username } } } = this.props,
-      obj = { user: id, username, dispatch, update_followers: true, done: () => this.setState({ is_following: true }) }
-		fn.follow(obj)
+		let { dispatch, user: { user_details: { id, username } } } = this.props
+    fn.follow({
+      user: id,
+      username,
+      dispatch,
+      update_followers: true,
+      done: () => this.setState({ is_following: true })
+    })
 	}
 
 	unfollow = e => {
     e.preventDefault()
-    let
-      { dispatch, user: { user_details: { id } } } = this.props,
-      obj = { user: id, dispatch, update_followers: true, done: () => this.setState({ is_following: false }) }
-    fn.unfollow(obj)
+    let { dispatch, user: { user_details: { id } } } = this.props
+    fn.unfollow({
+      user: id,
+      dispatch,
+      update_followers: true,
+      done: () => this.setState({ is_following: false })
+    })
 	}
 
 	toNotes = () => $('html, body').animate({ scrollTop: 390 }, 450)
 
 	render(){
     let
-      { url, user: { user_details }, notes, follow: { profile_views, followers, followings} } = this.props,
+      { url,
+        user: { user_details },
+        notes,
+        follow: { profile_views, followers, followings}
+      } = this.props,
       { is_following } = this.state,
       s_username = $('.data').data('username')
 
@@ -71,8 +83,16 @@ export default class Banner extends React.Component{
           <div className="user_info">
             <Link to='#' className="user_main_link">{user_details.username}</Link>
             <span className="user_no_notes">{user_details.email}</span>
-            <div className="user_bio">
-              <span>{user_details.bio}</span>
+            <div className={`user_bio ${!user_details.bio ? 'no_bio' : null}`}>
+              {
+                user_details.bio ?
+                  <span>{user_details.bio}</span>
+                :
+                  fn.Me(user_details.id) ?
+                    <span>You have no bio!!</span>
+                  :
+                    <span>{`${user_details.username} has no bio!!`}</span>
+              }
             </div>
             <hr />
             <div className="user_stats">

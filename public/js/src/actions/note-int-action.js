@@ -1,18 +1,18 @@
-import axios from 'axios'
+import { post } from 'axios'
 
 const note_details = note => {
   return dispatch => {
-    axios.post('/api/get-note-details', { note })
+    post('/api/get-note-details', { note })
       .then(s => dispatch({ type: "NOTE_DETAILS", payload: s.data }) )
-      .catch(e => dispatch({ type: "NOTE_DETAILS_ERR", payload: e }) )
+      .catch(e => console.log(err) )
   }
 }
 
 const likes = note => {
   return dispatch => {
-    axios.post('/api/likes', { note })
+    post('/api/likes', { note })
       .then(likes => dispatch({ type: "LIKES", payload: likes.data }) )
-      .catch(err => dispatch({ type: "LIKES_ERR", payload: err }) )
+      .catch(err => console.log(err) )
   }
 }
 

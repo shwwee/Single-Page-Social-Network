@@ -1,5 +1,16 @@
 # Single-Page-Social-Network
-A single-page social-network developed with MERN stack & Redux. Screenshots below!!
+A reactive single-page-social-network created with React. Screenshots below!!
+
+**No longer maintained. But it works**
+
+**[Please visit this link](https://github.com/yTakkar/React-Instagram-Clone-2.0)** for the updated version of this project.
+
+# Other Versions
+**[Vue Version](https://github.com/yTakkar/Vue-Mini-Social-Network)**
+
+**[Golang Version](https://github.com/yTakkar/Go-Page-Social-Network)**
+
+**[Ruby On Rails Version](https://github.com/yTakkar/Rails-Mini-Social-Network)**
 
 # Quick liks
 1. [Screenshots](#screenshots)
@@ -11,9 +22,8 @@ A single-page social-network developed with MERN stack & Redux. Screenshots belo
 ![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.27.34.png)
 ![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.27.45.png)
 ![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.29.13.png)
-![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.29.48.png)
-![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.30.13.png)
 ![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.31.06.png)
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/15f084078b23b862a7537adbc721623e0b81578d/screenshots/Snap%202017-09-17%20at%2013.30.18.png)
 ![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.29.35.png)
 ![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.28.54.png)
 
@@ -22,12 +32,12 @@ A single-page social-network developed with MERN stack & Redux. Screenshots belo
 UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I created!!
 
 # Own the project
-1. First install all dependencies with npm or Yarn:
-    ```javascript
+1. First install all dependencies:
+    ```bash
+    # with npm
     npm install
-    ```
-    or
-    ```javascript
+    
+    # or with yarn
     yarn
     ```
 
@@ -52,7 +62,7 @@ UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I 
 
 5. Now run the app
     ```javacript
-    localhost:[PORT]     PORT = YOU DEFINED IN .ENV FILE. 1152 BY DEFAULT!!
+    localhost:[PORT]     PORT = YOU DEFINED IN .ENV FILE. 1157 BY DEFAULT!!
     ```
 
 6. Enjoy!!
